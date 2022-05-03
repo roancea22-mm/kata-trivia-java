@@ -4,10 +4,14 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 
 public class GameBetter implements IGame {
+
+   public static final String QUESTION = " Question ";
+   public static final int DEFAULT_SIZE = 6;
+
    ArrayList<String> players = new ArrayList<>();
-   int[] places = new int[6];
-   int[] purses = new int[6];
-   boolean[] inPenaltyBox = new boolean[6];
+   int[] places = new int[DEFAULT_SIZE];
+   int[] purses = new int[DEFAULT_SIZE];
+   boolean[] inPenaltyBox = new boolean[DEFAULT_SIZE];
 
    LinkedList<String> popQuestions = new LinkedList<>();
    LinkedList<String> scienceQuestions = new LinkedList<>();
@@ -19,30 +23,23 @@ public class GameBetter implements IGame {
 
    public GameBetter() {
       for (int i = 0; i < 50; i++) {
-         popQuestions.addLast("Pop Question " + i);
-         scienceQuestions.addLast(("Science Question " + i));
-         sportsQuestions.addLast(("Sports Question " + i));
-         rockQuestions.addLast(createRockQuestion(i));
+         popQuestions.addLast("Pop" + QUESTION + i);
+         scienceQuestions.addLast("Science" + QUESTION + i);
+         sportsQuestions.addLast("Sports" + QUESTION + i);
+         rockQuestions.addLast("Rock" + QUESTION + i);
       }
-   }
-
-   public String createRockQuestion(int index) {
-      return "Rock Question " + index;
    }
 
    public boolean add(String playerName) {
       players.add(playerName);
-      places[howManyPlayers()] = 0;
-      purses[howManyPlayers()] = 0;
-      inPenaltyBox[howManyPlayers()] = false;
+      int noOfPlayers =  players.size();
+      places[noOfPlayers] = 0;
+      purses[noOfPlayers] = 0;
+      inPenaltyBox[noOfPlayers] = false;
 
       System.out.println(playerName + " was added");
       System.out.println("They are player number " + players.size());
       return true;
-   }
-
-   public int howManyPlayers() {
-      return players.size();
    }
 
    public void roll(int roll) {
@@ -69,8 +66,8 @@ public class GameBetter implements IGame {
    }
 
    private void moveToLocation(int roll) {
-      places[currentPlayer] = places[currentPlayer] + roll;
-      if (places[currentPlayer] > 11) places[currentPlayer] = places[currentPlayer] - 12;
+      places[currentPlayer] += roll;
+      if (places[currentPlayer] >= 12) places[currentPlayer] -= 12;
 
       System.out.println(players.get(currentPlayer)
               + "'s new location is "
@@ -97,7 +94,6 @@ public class GameBetter implements IGame {
             break;
       }
    }
-
 
    private String currentCategory() {
       switch (places[currentPlayer]) {
@@ -139,7 +135,7 @@ public class GameBetter implements IGame {
               + purses[currentPlayer]
               + " Gold Coins.");
 
-      boolean winner = didPlayerWin();
+      boolean winner = purses[currentPlayer] != 6;
       currentPlayer++;
       if (currentPlayer == players.size()) currentPlayer = 0;
 
@@ -156,8 +152,4 @@ public class GameBetter implements IGame {
       return true;
    }
 
-
-   private boolean didPlayerWin() {
-      return !(purses[currentPlayer] == 6);
-   }
 }
