@@ -116,6 +116,7 @@ public class GameBetter implements IGame {
    public boolean wasCorrectlyAnswered() {
       if (inPenaltyBox[currentPlayer]) {
          if (isGettingOutOfPenaltyBox) {
+            inPenaltyBox[currentPlayer] = false ;
             return getWinner();
          } else {
             currentPlayer++;
