@@ -7,14 +7,15 @@ import java.util.LinkedList;
 // TODO refactor me
 public class Game implements IGame {
    ArrayList players = new ArrayList();
-   int[] places = new int[6];
-   int[] purses = new int[6];
-   boolean[] inPenaltyBox = new boolean[6];
+   int[] places = new int[7];
+   int[] purses = new int[7];
+   boolean[] inPenaltyBox = new boolean[7];
 
    LinkedList popQuestions = new LinkedList();
    LinkedList scienceQuestions = new LinkedList();
    LinkedList sportsQuestions = new LinkedList();
    LinkedList rockQuestions = new LinkedList();
+   LinkedList<String> geographyQuestions = new LinkedList<>();
 
    int currentPlayer = 0;
    boolean isGettingOutOfPenaltyBox;
@@ -25,6 +26,7 @@ public class Game implements IGame {
          scienceQuestions.addLast(("Science Question " + i));
          sportsQuestions.addLast(("Sports Question " + i));
          rockQuestions.addLast(createRockQuestion(i));
+         geographyQuestions.addLast("Geography Question " + i);
       }
    }
 
@@ -37,16 +39,19 @@ public class Game implements IGame {
    }
 
    public boolean add(String playerName) {
+      if (players.contains(playerName)) {
+         System.out.println("Player name already added");
+         return false;
+      } else {
+         players.add(playerName);
+         places[howManyPlayers()] = 0;
+         purses[howManyPlayers()] = 0;
+         inPenaltyBox[howManyPlayers()] = false;
 
-
-      players.add(playerName);
-      places[howManyPlayers()] = 0;
-      purses[howManyPlayers()] = 0;
-      inPenaltyBox[howManyPlayers()] = false;
-
-      System.out.println(playerName + " was added");
-      System.out.println("They are player number " + players.size());
-      return true;
+         System.out.println(playerName + " was added");
+         System.out.println("They are player number " + players.size());
+         return true;
+      }
    }
 
    public int howManyPlayers() {
@@ -98,14 +103,16 @@ public class Game implements IGame {
          System.out.println(sportsQuestions.removeFirst());
       if (currentCategory() == "Rock")
          System.out.println(rockQuestions.removeFirst());
+      if (currentCategory() == "Geography")
+         System.out.println(geographyQuestions.removeFirst());
    }
 
 
    private String currentCategory() {
-      if (places[currentPlayer] == 0) return "Pop";
+      if (places[currentPlayer] == 0) return "Geography";
       if (places[currentPlayer] == 4) return "Pop";
       if (places[currentPlayer] == 8) return "Pop";
-      if (places[currentPlayer] == 1) return "Science";
+      if (places[currentPlayer] == 1) return "Geography";
       if (places[currentPlayer] == 5) return "Science";
       if (places[currentPlayer] == 9) return "Science";
       if (places[currentPlayer] == 2) return "Sports";

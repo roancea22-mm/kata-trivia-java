@@ -6,7 +6,7 @@ import java.util.LinkedList;
 public class GameBetter implements IGame {
 
    public static final String QUESTION = " Question ";
-   public static final int DEFAULT_SIZE = 6;
+   public static final int DEFAULT_SIZE = 7;
 
    ArrayList<String> players = new ArrayList<>();
    int[] places = new int[DEFAULT_SIZE];
@@ -17,6 +17,7 @@ public class GameBetter implements IGame {
    LinkedList<String> scienceQuestions = new LinkedList<>();
    LinkedList<String> sportsQuestions = new LinkedList<>();
    LinkedList<String> rockQuestions = new LinkedList<>();
+   LinkedList<String> geographyQuestions = new LinkedList<>();
 
    int currentPlayer = 0;
    boolean isGettingOutOfPenaltyBox;
@@ -27,19 +28,25 @@ public class GameBetter implements IGame {
          scienceQuestions.addLast("Science" + QUESTION + i);
          sportsQuestions.addLast("Sports" + QUESTION + i);
          rockQuestions.addLast("Rock" + QUESTION + i);
+         geographyQuestions.addLast("Geography" + QUESTION + i);
       }
    }
 
    public boolean add(String playerName) {
-      players.add(playerName);
-      int noOfPlayers =  players.size();
-      places[noOfPlayers] = 0;
-      purses[noOfPlayers] = 0;
-      inPenaltyBox[noOfPlayers] = false;
+      if (players.contains(playerName)) {
+         System.out.println("Player name already added");
+         return false;
+      } else {
+         players.add(playerName);
+         int noOfPlayers = players.size();
+         places[noOfPlayers] = 0;
+         purses[noOfPlayers] = 0;
+         inPenaltyBox[noOfPlayers] = false;
 
-      System.out.println(playerName + " was added");
-      System.out.println("They are player number " + players.size());
-      return true;
+         System.out.println(playerName + " was added");
+         System.out.println("They are player number " + players.size());
+         return true;
+      }
    }
 
    public void roll(int roll) {
@@ -90,6 +97,9 @@ public class GameBetter implements IGame {
          case "Rock":
             System.out.println(rockQuestions.removeFirst());
             break;
+         case "Geography":
+            System.out.println(geographyQuestions.removeFirst());
+            break;
          default:
             break;
       }
@@ -98,10 +108,11 @@ public class GameBetter implements IGame {
    private String currentCategory() {
       switch (places[currentPlayer]) {
          case 0:
+         case 1:
+            return "Geography";
          case 8:
          case 4:
             return "Pop";
-         case 1:
          case 5:
          case 9:
             return "Science";
