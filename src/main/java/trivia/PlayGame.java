@@ -44,14 +44,21 @@ public class PlayGame {
          if (correct) {
             notAWinner = aGame.wasCorrectlyAnswered();
          } else {
-            notAWinner = aGame.wrongAnswer();
+            aGame.askQuestion();
+            System.out.print(">> Was the answer correct? [y/n] ");
+            correct = readYesNo();
+            if (correct) {
+               notAWinner = aGame.wasCorrectlyAnswered();
+            } else {
+               notAWinner = aGame.wrongAnswer();
+            }
          }
 
       } while (notAWinner);
       System.out.println(">> Game won!");
    }
 
-   private static boolean readYesNo() {
+   static boolean readYesNo() {
       String yn = scanner.nextLine().trim().toUpperCase();
       if (!yn.matches("[YN]")) {
          System.err.println("y or n please");

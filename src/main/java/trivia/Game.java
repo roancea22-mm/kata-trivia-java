@@ -3,6 +3,8 @@ package trivia;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
+import static trivia.PlayGame.readYesNo;
+
 
 // TODO refactor me
 public class Game implements IGame {
@@ -94,7 +96,7 @@ public class Game implements IGame {
 
    }
 
-   private void askQuestion() {
+   public void askQuestion() {
       if (currentCategory() == "Pop")
          System.out.println(popQuestions.removeFirst());
       if (currentCategory() == "Science")

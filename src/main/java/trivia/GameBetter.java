@@ -3,6 +3,8 @@ package trivia;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
+import static trivia.PlayGame.readYesNo;
+
 public class GameBetter implements IGame {
 
    public static final String QUESTION = " Question ";
@@ -83,7 +85,7 @@ public class GameBetter implements IGame {
       askQuestion();
    }
 
-   private void askQuestion() {
+   public void askQuestion() {
       switch (currentCategory()) {
          case "Pop":
             System.out.println(popQuestions.removeFirst());
@@ -163,5 +165,4 @@ public class GameBetter implements IGame {
       if (currentPlayer == players.size()) currentPlayer = 0;
       return true;
    }
-
 }

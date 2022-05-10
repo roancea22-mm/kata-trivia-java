@@ -10,4 +10,6 @@ public interface IGame {
 
 	boolean wrongAnswer();
 
+	void askQuestion();
+
 }
